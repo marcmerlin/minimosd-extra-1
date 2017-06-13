@@ -14,7 +14,7 @@ make_one(){
     PROTO=$1
 
     make -C $SRC PROTO="-DUSE_${PROTO}=1"
-    [ -f $BUILD/MinimOsd_Extra.hex ] && mv $BUILD/MinimOsd_Extra.hex $RELEASE/MinimOsd_Extra_Uni.${VERS}DV-${PROTO}-release.hex && rm -rf $BUILD
+    [ -f $BUILD/MinimOsd_Extra.hex ] && mv $BUILD/MinimOsd_Extra.hex $RELEASE/MinimOsd_Extra_Uni.${VERS}MM-${PROTO}-release.hex && rm -rf $BUILD
 
 }
 

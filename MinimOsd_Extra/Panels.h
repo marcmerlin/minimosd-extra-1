@@ -1686,13 +1686,15 @@ static void panHomeDir(point p){
     if(is_alt(p)) osd_printi_1(f3i, osd_home_direction);
 }
 
+// Display mavlink messages, this includes boot messages before arm, but some may scroll
+// by too quckly to be shown -- merlin
 static void panMessage(point p){
 
 #define MAX_MSG_SIZE 26
 
 //    lflags.show_screnN = !is_alt2(p);
 
-    if(mav_message[0] && mav_msg_ttl != seconds) { // вызывается не реже 2 раз в секунду поэтому точное сравнение будет работать
+    if(mav_message[0] && mav_msg_ttl != seconds) { // It is called at least 2 times per second so the exact comparison will work
 	char sign=0;
 
 #if defined(USE_MAVLINK)
@@ -2923,10 +2925,9 @@ void writePanels(unsigned long pt){  // текущее время - функци
 //  if (!lflags.motor_armed && (((pt / 10000) % 2) == 0) && (trip_distance > 50)){
 //  if (!lflags.motor_armed && (((seconds / 10) % 2) == 0) && (trip_distance > 50)){
 //  if (!lflags.motor_armed && ( pt - landed < 10000 ) && ((int)trip_distance > 5)){ // 10 seconds after disarm
-        if ( !lflags.motor_armed && landed /* not 0! */ && time_since(&landed) < 3000 
-#if !defined(DEBUG) || 1
-          && ((int)trip_distance > 5) // show always in debug mode
-#endif
+// && time_since(&landed) < 3000 caused the summary page never to display, I've commented it out -- merlin
+        if ( !lflags.motor_armed && landed // && time_since(&landed) < 3000 
+          && ((int)trip_distance > 5) 
                                  ){ // 3 seconds after disarm one can jerk sticks
 
 //DBG_PRINTF("set FData landed=%u\n", landed);
