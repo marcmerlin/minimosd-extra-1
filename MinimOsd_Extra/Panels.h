@@ -888,23 +888,28 @@ static inline void check_warn(point p)
 
     int iVs = (int)abs(vertical_speed) /10;
 
-//6
-    if (sets.model_type==1 && sets.stall >0 && iVs > sets.stall ) // copter - vertical speed
+
+//6    voltage limit set and less                   capacity limit set and less
+    if (sets.battBv !=0 && iVolt!=0 && (iVolt < sets.battBv) )
         wmask |= (1<<5);
 
-    iVolt = osd_vbat_B/100; // in 0.1v as sets.battBv is
-
-//7    voltage limit set and less                   capacity limit set and less
-    if (sets.battBv !=0 && iVolt!=0 && (iVolt < sets.battBv) )
-        wmask |= (1<<6);
-
-  // Motor running but amps too low likely means motor failure
+//7	Motor running but amps too low likely means motor failure
   // osd_curr_A is in hundreds of amps, so 1 = 0.01A
   // 30% throttle or more, and less than 2A is deemed a motor failure
     if(osd_throttle>30 && osd_curr_A < 200)
+        wmask |= (1<<6);
+
+#if 0
+//8
+    if (sets.model_type==1 && sets.stall >0 && iVs > sets.stall ) // copter - vertical speed
         wmask |= (1<<7);
 
-#if defined(USE_MAVLINK)
+    iVolt = osd_vbat_B/100; // in 0.1v as sets.battBv is
+#endif
+
+// This didn't work for me, and takes space, so let's turn it off -- merlin
+#if 0
+//if defined(USE_MAVLINK)
   if(is_alt(p)) {
 //8
     if(mav_fence_status == FENCE_BREACH_MINALT)
@@ -956,12 +961,14 @@ const char PROGMEM w2[]="\x20\x20\x53\x74\x61\x6c\x6c\x21";             //   Sta
 const char PROGMEM w3[]="\x4f\x76\x65\x72\x53\x70\x65\x65\x64\x21";     // Over Speed!
 const char PROGMEM w4[]="\x42\x61\x74\x74\x65\x72\x79\x20\x4c\x6f\x77\x21"; //Battery Low!
 const char PROGMEM w5[]="\x20\x4c\x6f\x77\x20\x52\x73\x73\x69!";        // Low Rssi!
-const char PROGMEM w6[]="\x48\x69\x67\x68\x20\x56\x53\x70\x65\x65\x64\x21"; //Hi VSpeed!
-const char PROGMEM w7[]="Batt B low!"; 
-const char PROGMEM w8[]="Motor Dead?";
+const char PROGMEM w6[]="Batt B low!"; 
+const char PROGMEM w7[]="Motor Dead?";
+// const char PROGMEM w8[]="\x48\x69\x67\x68\x20\x56\x53\x70\x65\x65\x64\x21"; //Hi VSpeed!
+#if 0
 const char PROGMEM w9[]="Fence Low!";
 const char PROGMEM w10[]="Fence High!";
 const char PROGMEM w11[]="Fence Far!";
+#endif
 
 const char * const PROGMEM warn_str[] = {
     w1,
@@ -971,10 +978,12 @@ const char * const PROGMEM warn_str[] = {
     w5,
     w6,
     w7,
+#if 0
     w8,
     w9,
     w10,
     w11,
+#endif
 };
 
 static void panWarn(point p){
@@ -2550,7 +2559,6 @@ static void /*NOINLINE*/ move_screen(char dir){
 
 static void panSetup(){
 
-#if 0
     const Params *p;
     float v = 0;
     byte size;
@@ -2777,7 +2785,6 @@ no_write:
 
     }
 
-#endif
 }
 #endif
 

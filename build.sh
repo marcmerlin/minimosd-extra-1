@@ -20,7 +20,7 @@ make_one(){
 
 
 # build mavlink first since uavtalk requires extra libraries not included in this source.
-#make_one 'MAVLINK'
+make_one 'MAVLINK'
 #make_one 'UAVTALK'
 #make_one 'MWII'
 #make_one 'NMEA'

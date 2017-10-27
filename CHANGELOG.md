@@ -1,3 +1,23 @@
+v937MM
+* Added useful "motor dead" function that will detect if the airplane motor is dead
+  by checking for throttle being higher than 30% and amps below 2A.
+  Test case: ./Released/motorloss.tlog
+* Build is mavlink only, I don't check the other builds or protocols, so no point in
+  building them either.
+* Disabled fence low/fence high/fence far messages to save space
+* Disabled Hi VSpeed warning to allow resulting binary to work (with this code added
+  the binary does not behave properly for no explainable reason)
+Program: 30550 / Data: 1603
+
+v936MM
+* Fixed landing does not trigger summary screen
+  Test case: ./Released/landing.tlog
+
+v933MM
+* Added by 200 support (rotate panel with a quick switch flip of at less
+200uS difference, and then back to original position in less than 1
+second.
+
 v813:
 
 * HUD borders can be turned off

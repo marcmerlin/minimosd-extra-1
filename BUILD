@@ -1,3 +1,10 @@
+Maximum build size is maybe 30,720 bytes
+Next code that can be disabled (for size) is static void panVibe
+To save a lot more space, panSetup can also be removed
+
+
+--------------------------------------------------------------------------------------
+
 Basic build instructions by Marc MERLIN
 
 1) install arduino-mk
