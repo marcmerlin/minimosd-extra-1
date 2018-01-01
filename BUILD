@@ -2,6 +2,11 @@ Maximum build size is maybe 30,720 bytes
 Next code that can be disabled (for size) is static void panVibe
 To save a lot more space, panSetup can also be removed
 
+After changing code, you may end up with a non working binary for no apparent
+reason. If so, look for 
+MinimOsd_Extra/MinimOsd_Extra.ino:Serial.print_P(PSTR("#1z
+and change the number of z's to affect the alignment.
+
 
 --------------------------------------------------------------------------------------
 

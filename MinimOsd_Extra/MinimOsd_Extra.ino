@@ -349,6 +349,8 @@ void setup()     {
     mavlink_comm_0_port = &Serial; // setup mavlink port
 #endif
 
+// There may be an alignment problem in the compilation that will cause the resulting code
+// not to work. If you get a blank screen after adding code, try changing the number of z's
 Serial.print_P(PSTR("#1zzzzz\n"));
 
 
